@@ -3,7 +3,7 @@ const fs = require("fs");
 const fileName = "secrets.json";
 function readSecrets() {
   try {
-    const secretsJSON = fs.readFileSync("secrets.json", "utf-8");
+    const secretsJSON = fs.readFileSync(fileName, "utf-8");
     secrets = JSON.parse(secretsJSON);
     return secrets;
   } catch (error) {
@@ -14,7 +14,7 @@ function readSecrets() {
 }
 
 function writeSecrets(secrets) {
-  fs.writeFileSync("secrets.json", JSON.stringify(secrets));
+  fs.writeFileSync(fileName, JSON.stringify(secrets));
 }
 
 exports.readSecrets = readSecrets;
