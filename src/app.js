@@ -1,5 +1,7 @@
 const { readSecrets, writeSecrets } = require("./Models/secrets");
 
+const readline = require("readline");
+
 function get(key) {
   const secrets = readSecrets();
   const secret = secrets[key];
@@ -19,6 +21,14 @@ function unset(key) {
 }
 
 const [action, key, value] = process.argv.slice(2);
+const masterPassword = "Wurstinator";
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.stdoutMuted = true;
 
 function handlePwSetting(action, key, value) {
   switch (action) {
@@ -26,7 +36,14 @@ function handlePwSetting(action, key, value) {
       set(key, value);
       break;
     case "get":
-      get(key);
+      rl.question("Please enter Masterpassword: ...", answer => {
+        if (answer === masterPassword) {
+          get(key);
+        } else {
+          console.log("Wrong Password!!!");
+        }
+        rl.close();
+      });
       break;
     case "unset":
       unset(key);
