@@ -1,5 +1,6 @@
 // create webserver
 const { get } = require("./lib/commands");
+const url = require("url");
 
 const http = require("http");
 
@@ -9,10 +10,13 @@ const server = http.createServer(function(request, response) {
     return response.end();
   }
   try {
-    const secret = get("1234", request.url.slice(1));
+    const secret = get(
+      "1234",
+      url.parse(request.url, false, true).pathname.slice(1)
+    );
     response.write(secret);
   } catch (error) {
-    response.write("Error: 404, not Found");
+    response.write("Can not read secret");
   }
   return response.end();
 });
