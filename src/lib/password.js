@@ -9,20 +9,19 @@ function hashPassword(password) {
   return [salt, hash].join("$");
 }
 
-const fileName = "master.json";
+const fileName = "master.txt";
 
 function readMaster() {
   try {
-    const secretsJSON = fs.readFileSync(fileName, "utf-8");
-    secrets = JSON.parse(secretsJSON);
-    return secrets;
+    const master = fs.readFileSync(fileName, "utf-8");
+    return master;
   } catch (error) {
     return false;
   }
 }
 
 function writeMaster(secret) {
-  fs.writeFileSync(fileName, JSON.stringify(secret));
+  fs.writeFileSync(fileName, secret);
 }
 
 exports.hashPassword = hashPassword;
