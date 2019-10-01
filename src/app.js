@@ -1,29 +1,36 @@
 const { handlePwRequests } = require("./lib/commands.js");
+const crypto = require("crypto");
+const readline = require("readline");
+const { readMaster } = require("./lib/password.js");
 
 const [action, key, value] = process.argv.slice(2);
 
-const readline = require("readline");
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-const masterPasswordHash = "";
+const masterPasswordHash = readMaster();
 
-rl.question("Please enter Masterpassword: ", password => {
-  rl.output.write("\n");
-  if (verifyHash(password, masterPasswordHash)) {
-    handlePwRequests(action, key, value);
-  } else {
-    console.log("Wrong Password!!!");
-  }
+if (masterPasswordHash) {
+  rl.question("Please enter Masterpassword: ", password => {
+    rl.output.write("\n");
+    if (verifyHash(password, masterPasswordHash)) {
+      handlePwRequests(password, action, key, value);
+    } else {
+      console.log("Wrong Password!!!");
+    }
 
+    rl.close();
+  });
+
+  rl._writeToOutput = function _writeToOutput() {
+    rl.output.write("*");
+  };
+} else {
+  console.log("No Master-Password yet. Please run createHash.js");
   rl.close();
-});
-
-rl._writeToOutput = function _writeToOutput() {
-  rl.output.write("*");
-};
+}
 
 // Checking the password hash
 function verifyHash(password, original) {

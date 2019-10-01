@@ -7,7 +7,7 @@ function readSecrets() {
     secrets = JSON.parse(secretsJSON);
     return secrets;
   } catch (error) {
-    console.log("Es wurden noch keine Passwörter gespeichert");
+    console.log("No passwords yet. Creating new File...");
     writeSecrets({});
     return {};
   }
