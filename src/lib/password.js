@@ -9,7 +9,7 @@ function hashPassword(password) {
   return [salt, hash].join("$");
 }
 
-const fileName = "master.txt";
+const fileName = ".master.txt";
 
 function readMaster() {
   try {

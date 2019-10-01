@@ -9,7 +9,7 @@ function get(password, key) {
   let decryptedSecret = cryptoKey.update(secret, "hex", "utf8");
   decryptedSecret += cryptoKey.final("utf8");
 
-  console.log(decryptedSecret);
+  return decryptedSecret;
 }
 
 function set(password, key, value) {
@@ -38,15 +38,17 @@ exports.handlePwRequests = function handlePwRequests(
 ) {
   switch (action) {
     case "set":
-      set(password, key, value);
-      break;
+      return set(password, key, value);
+
     case "get":
-      get(password, key);
-      break;
+      return get(password, key);
+
     case "unset":
-      unset(password, key);
-      break;
+      return unset(password, key);
+
     default:
       throw new Error("unknown action");
   }
 };
+
+exports.get = get;
