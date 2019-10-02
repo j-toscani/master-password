@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header><h1>Wilkommen liebe Leut!</h1></header>
+    <main>
+      <div>
+        <h2>Check your passwords:</h2>
+        <label for="checkForm">What password do you need?</label>
+        <form id="checkForm">
+          <input
+            type="text"
+            id="pwCheck"
+            placeholder="Enter category (e.g. Wifi)"
+            autocomplete="off"
+          />
+          <button>Get Secret</button>
+        </form>
+      </div>
+      <p id="output"></p>
+      <div>
+        <h2>Add new password</h2>
+
+        <label for="submitForm">Input Password and Category</label>
+        <form id="submitForm" name="submitForm">
+          <input
+            type="text"
+            id="categoryInput"
+            placeholder="Enter category"
+            autocomplete="off"
+          />
+          <input
+            type="password"
+            id="pwInput"
+            placeholder="Enter password"
+            autocomplete="off"
+          />
+          <button>Set Secret</button>
+        </form>
+      </div>
+    </main>
+  </body>
+  <script>
+    const inputCheck = document.getElementById("pwCheck");
+    const formCheck = document.getElementById("checkForm");
+    const inputSubmitCategory = document.getElementById("categoryInput");
+    const inputSubmitPw = document.getElementById("pwInput");
+    const formSubmit = document.getElementById("submitForm");
+    const output = document.getElementById("output");
+
+    //Returns a value after the fetch is complete. As this action is performed asynchronously, a second "then" is required
+
+    function handleCheck(event) {
+      event.preventDefault();
+      const url = `http://localhost:4000/${inputCheck.value}`;
+
+      fetch(url)
+        .then(response => response.text())
+        .then(secret => (output.innerHTML = secret));
+    }
+
+    function createSecret(event) {
+      secret = {};
+      secret[inputSubmitCategory.value] = inputSubmitPw.value;
+      return secret;
+    }
+
+    formCheck.addEventListener("submit", handleCheck);
+    formSubmit.addEventListener("submit", handleSubmit);
+  </script>
+</html>
