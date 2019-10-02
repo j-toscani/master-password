@@ -52,3 +52,4 @@ exports.handlePwRequests = function handlePwRequests(
 };
 
 exports.get = get;
+exports.set = set;

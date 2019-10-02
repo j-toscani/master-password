@@ -64,13 +64,21 @@
         .then(secret => (output.innerHTML = secret));
     }
 
-    function createSecret(event) {
-      secret = {};
+    function postSecret(event) {
+      event.preventDefault();
+      const secret = {};
       secret[inputSubmitCategory.value] = inputSubmitPw.value;
-      return secret;
+      console.log(secret);
+      return fetch(`http://localhost:4000/${inputSubmitCategory.value}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/html"
+        },
+        body: inputSubmitPw.value
+      });
     }
 
     formCheck.addEventListener("submit", handleCheck);
-    formSubmit.addEventListener("submit", handleSubmit);
+    formSubmit.addEventListener("submit", postSecret);
   </script>
 </html>
