@@ -28,10 +28,8 @@ const server = http.createServer(function(request, response) {
       let body = "";
       request.on("data", function(data) {
         body += data;
-        console.log("Partial body: " + body);
       });
       request.on("end", function() {
-        console.log("Body: " + body);
         set("1234", path, body);
         response.end(`Set ${path}`);
       });
